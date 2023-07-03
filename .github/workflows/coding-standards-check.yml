@@ -151,6 +151,12 @@ jobs:
           composer require mglaman/drupal-check --dev
           composer require pingevt/$DRUPAL_MODULE_NAME
 
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+          path: $MODULE_FOLDER
+
       - name: Check phpunit file.
         working-directory: ${{ env.DRUPAL_ROOT }}
         continue-on-error: true
