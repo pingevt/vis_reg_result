@@ -143,6 +143,7 @@ jobs:
       - name: Install the module
         working-directory: ${{ env.DRUPAL_ROOT }}
         run: |
+          composer config --list
           composer config --no-plugins allow-plugins.oomphinc/composer-installers-extender true
           composer config repositories.0 path $GITHUB_WORKSPACE
           composer config extra.installer-paths
@@ -230,8 +231,10 @@ jobs:
         working-directory: ${{ env.DRUPAL_ROOT }}
         continue-on-error: true
         run: |
-          echo PWD
+          pwd
+          echo $HOME
           ls -sla $HOME
+          echo $MODULE_FOLDER
           ls -sla $MODULE_FOLDER
 
       # Uncomment this step to run tests using phpunit. Your module is expected
