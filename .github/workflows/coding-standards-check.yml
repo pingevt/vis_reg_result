@@ -143,11 +143,9 @@ jobs:
       - name: Install the module
         working-directory: ${{ env.DRUPAL_ROOT }}
         run: |
-          composer config --list
           composer config --no-plugins allow-plugins.oomphinc/composer-installers-extender true
           composer config repositories.pingevt/$DRUPAL_MODULE_NAME path $GITHUB_WORKSPACE
           composer config extra.installer-paths
-          composer config --list
           composer require mglaman/drupal-check --dev
           composer require pingevt/$DRUPAL_MODULE_NAME
 
@@ -155,20 +153,6 @@ jobs:
         run: |
           rm -R $MODULE_FOLDER
           cp -R $GITHUB_WORKSPACE $MODULE_FOLDER
-
-      - name: Check phpunit file.
-        working-directory: ${{ env.DRUPAL_ROOT }}
-        continue-on-error: true
-        run: |
-          pwd
-          echo $HOME
-          ls -sla $HOME
-          echo $MODULE_FOLDER/..
-          ls -sla $MODULE_FOLDER/..
-          echo $MODULE_FOLDER
-          ls -sla $MODULE_FOLDER
-          echo $GITHUB_WORKSPACE
-          ls -sla $GITHUB_WORKSPACE
 
       # PHP 8+ requires newer phpunit, use core's composer script
       # to upgrade it.
@@ -245,20 +229,6 @@ jobs:
       #       --php /usr/local/bin/php --color --verbose \
       #       --sqlite /tmp/test.sqlite \
       #       --url $SIMPLETEST_BASE_URL $DRUPAL_MODULE_NAME
-
-      - name: Check phpunit file.
-        working-directory: ${{ env.DRUPAL_ROOT }}
-        continue-on-error: true
-        run: |
-          pwd
-          echo $HOME
-          ls -sla $HOME
-          echo $MODULE_FOLDER/..
-          ls -sla $MODULE_FOLDER/..
-          echo $MODULE_FOLDER
-          ls -sla $MODULE_FOLDER
-          echo $GITHUB_WORKSPACE
-          ls -sla $GITHUB_WORKSPACE
 
       # Uncomment this step to run tests using phpunit. Your module is expected
       # to ship with 'phpunit.xml' file. See the repository for an example
