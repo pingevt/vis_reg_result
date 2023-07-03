@@ -2,17 +2,12 @@
 
 namespace Drupal\vis_reg_result\Controller;
 
-use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\Core\Queue\QueueFactory;
-use Drupal\key\KeyRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -63,6 +58,9 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
     );
   }
 
+  /**
+   * Create Vis Reg entity on API call.
+   */
   public function visRegResults(Request $request) {
 
     $data = [
@@ -108,15 +106,16 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
     $data['data']['id'] = $report->id();
 
     // Create upload directory.
-    // @todo: this should be set in a settings file.
+    // @todo this should be set in a settings file.
     $target_dir = "public://vis-reg-reports/" . $timestamp;
     $this->fileSystem->prepareDirectory($target_dir, FileSystemInterface::CREATE_DIRECTORY);
 
     // Log it all!
-    $this->loggerFactory->get('vis_reg_result_api')->info("<pre>" . print_r($data['data'], true) . "</pre>", []);
+    $this->loggerFactory->get('vis_reg_result_api')->info("<pre>" . print_r($data['data'], TRUE) . "</pre>", []);
 
     $response = new JsonResponse($data);
 
     return $response;
   }
+
 }

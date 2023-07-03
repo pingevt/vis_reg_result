@@ -30,8 +30,8 @@ function vis_reg_result_theme() {
  *
  * @param array $variables
  *   An associative array containing:
- *   - elements: An associative array containing the vis-reg result information and any
- *     fields attached to the entity.
+ *   - elements: An associative array containing the vis-reg result information
+ *     and any fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */
 function template_preprocess_vis_reg_result(array &$variables) {
@@ -43,10 +43,10 @@ function template_preprocess_vis_reg_result(array &$variables) {
   }
 
   // Create link to VisReg Report.
-  // @todo: Possibly pull this functionality to the Entity level.
-  // @todo: Check for existance of the file first.
+  // @todo Possibly pull this functionality to the Entity level.
+  // @todo Check for existance of the file first.
   $wrapper = \Drupal::service('stream_wrapper_manager')->getViaUri("public://");
-  // @todo: SHould this structure be part of the settings?
+  // @todo SHould this structure be part of the settings?
   // Multi-value field looking for common dir paths?
   $uri = "base:" . $wrapper->getDirectoryPath() . "/vis-reg-reports/" . $result->field_directory->value . "/artifacts/backstop_data/html_report/index.html";
   $url = Url::fromUri($uri);
@@ -118,7 +118,7 @@ function vis_reg_result_vis_reg_result_predelete(VisRegResultInterface $entity) 
 
   // Remove Visual Regression Files.
   if (!$entity->field_directory->isEmpty()) {
-    // @todo: this should be set in a settings file.
+    // @todo this should be set in a settings file.
     $target_dir = "public://vis-reg-reports/" . $entity->field_directory->value;
     $file_system = \Drupal::service("file_system");
     $file_system->deleteRecursive($target_dir);
