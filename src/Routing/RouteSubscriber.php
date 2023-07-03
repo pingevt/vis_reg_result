@@ -23,9 +23,8 @@ class RouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   protected function alterRoutes(RouteCollection $collection) {
-    // Alter or add routes here.
     $vis_reg_result_can = $collection->get('entity.vis_reg_result.canonical');
-    ksm($vis_reg_result_can);
+    // Change canonical to admin route.
     $vis_reg_result_can->addOptions(
       [
         '_admin_route' => 'TRUE',
