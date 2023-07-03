@@ -85,7 +85,6 @@ jobs:
         drupal-core: ['10.0.x', '10.1.x']
         php-version: ['8.1', '8.2']
         mariadb-version: ['10.4', '10.6']
-        exclude:
 
     container:
       # See https://github.com/tuutti/docker-images/tree/main/drupal/ci
