@@ -151,6 +151,20 @@ jobs:
           composer require mglaman/drupal-check --dev
           composer require pingevt/$DRUPAL_MODULE_NAME
 
+      - name: Check phpunit file.
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        continue-on-error: true
+        run: |
+          pwd
+          echo $HOME
+          ls -sla $HOME
+          echo $MODULE_FOLDER/..
+          ls -sla $MODULE_FOLDER/..
+          echo $MODULE_FOLDER
+          ls -sla $MODULE_FOLDER
+          echo $GITHUB_WORKSPACE
+          ls -sla $GITHUB_WORKSPACE
+
       # PHP 8+ requires newer phpunit, use core's composer script
       # to upgrade it.
       - name: Upgrade phpunit
@@ -234,6 +248,8 @@ jobs:
           pwd
           echo $HOME
           ls -sla $HOME
+          echo $MODULE_FOLDER/..
+          ls -sla $MODULE_FOLDER/..
           echo $MODULE_FOLDER
           ls -sla $MODULE_FOLDER
           echo $GITHUB_WORKSPACE
