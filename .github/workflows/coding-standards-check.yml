@@ -146,6 +146,7 @@ jobs:
           composer config --no-plugins allow-plugins.oomphinc/composer-installers-extender true
           composer config repositories.0 path $GITHUB_WORKSPACE
           composer config extra.installer-paths
+          composer config --list
           composer require mglaman/drupal-check --dev
           composer require pingevt/$DRUPAL_MODULE_NAME
 
