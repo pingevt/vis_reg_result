@@ -175,11 +175,16 @@ jobs:
             site-install minimal --db-url="$SIMPLETEST_DB"
           vendor/bin/drush en $DRUPAL_MODULE_NAME -y
 
-      - name: Run PHPCS
+      - name: Run PHPCS - Drupal Standard
         working-directory: ${{ env.DRUPAL_ROOT }}
         continue-on-error: true
         run: |
           vendor/bin/phpcs -s --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt --ignore=node_modules,bower_components,vendor,dist --exclude=Drupal.InfoFiles.AutoAddedKeys --colors $MODULE_FOLDER
+
+      - name: Run PHPCS - DrupalPractice Standard
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        continue-on-error: true
+        run: |
           vendor/bin/phpcs -s --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt --ignore=node_modules,bower_components,vendor,dist --exclude=Drupal.InfoFiles.AutoAddedKeys --colors $MODULE_FOLDER
 
       - name: Run Drupal-Check
@@ -219,6 +224,11 @@ jobs:
       #       --php /usr/local/bin/php --color --verbose \
       #       --sqlite /tmp/test.sqlite \
       #       --url $SIMPLETEST_BASE_URL $DRUPAL_MODULE_NAME
+
+      - name: Check phpunti file.
+        working-directory: ${{ env.DRUPAL_ROOT }}
+        continue-on-error: true
+        run: ls -sla $MODULE_FOLDER
 
       # Uncomment this step to run tests using phpunit. Your module is expected
       # to ship with 'phpunit.xml' file. See the repository for an example
