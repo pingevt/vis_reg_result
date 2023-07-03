@@ -77,6 +77,7 @@ function vis_reg_result_user_cancel($edit, UserInterface $account, $method) {
       $vis_reg_result_ids = $storage->getQuery()
         ->condition('uid', $account->id())
         ->condition('status', 1)
+        ->accessCheck(FALSE)
         ->execute();
       foreach ($storage->loadMultiple($vis_reg_result_ids) as $vis_reg_result) {
         $vis_reg_result->set('status', FALSE);
@@ -89,6 +90,7 @@ function vis_reg_result_user_cancel($edit, UserInterface $account, $method) {
       $storage = \Drupal::entityTypeManager()->getStorage('vis_reg_result');
       $vis_reg_result_ids = $storage->getQuery()
         ->condition('uid', $account->id())
+        ->accessCheck(FALSE)
         ->execute();
       foreach ($storage->loadMultiple($vis_reg_result_ids) as $vis_reg_result) {
         $vis_reg_result->setOwnerId(0);
@@ -106,6 +108,7 @@ function vis_reg_result_user_predelete(UserInterface $account) {
   $storage = \Drupal::entityTypeManager()->getStorage('vis_reg_result');
   $vis_reg_result_ids = $storage->getQuery()
     ->condition('uid', $account->id())
+    ->accessCheck(FALSE)
     ->execute();
   $vis_reg_results = $storage->loadMultiple($vis_reg_result_ids);
   $storage->delete($vis_reg_results);

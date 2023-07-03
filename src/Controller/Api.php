@@ -2,6 +2,7 @@
 
 namespace Drupal\vis_reg_result\Controller;
 
+use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -20,7 +21,7 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
   /**
    * Entity Type Manager.
    *
-   * @var Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
@@ -39,12 +40,20 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
   protected $loggerFactory;
 
   /**
+   * Configuration Factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactory
+   */
+  protected $configFactory;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, FileSystemInterface $file_system, LoggerChannelFactoryInterface $factory) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, FileSystemInterface $file_system, LoggerChannelFactoryInterface $factory, ConfigFactoryInterface $config_factory) {
     $this->entityTypeManager = $entity_type_manager;
     $this->fileSystem = $file_system;
     $this->loggerFactory = $factory;
+    $this->configFactory = $configFactory;
   }
 
   /**
@@ -54,7 +63,8 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('file_system'),
-      $container->get('logger.factory')
+      $container->get('logger.factory'),
+      $container->get('config.factory')
     );
   }
 
@@ -77,7 +87,7 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
       throw $bad_response;
     }
 
-    $config = \Drupal::config('system.date');
+    $config = $this->configFactory->get('system.date');
     $config_data_default_timezone = $config->get('timezone.default');
 
     $now = new \Datetime();
