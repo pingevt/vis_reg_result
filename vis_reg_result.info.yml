@@ -5,6 +5,7 @@ package: CI/CD
 core_version_requirement: ^10
 
 dependencies:
+  - drupal:datetime
   - key_auth:key_auth
 
 
