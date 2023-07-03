@@ -236,6 +236,8 @@ jobs:
           ls -sla $HOME
           echo $MODULE_FOLDER
           ls -sla $MODULE_FOLDER
+          echo $GITHUB_WORKSPACE
+          ls -sla $GITHUB_WORKSPACE
 
       # Uncomment this step to run tests using phpunit. Your module is expected
       # to ship with 'phpunit.xml' file. See the repository for an example
