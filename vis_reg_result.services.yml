@@ -1,0 +1,5 @@
+services:
+  visreg_result.route_subscriber:
+    class: Drupal\vis_reg_result\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

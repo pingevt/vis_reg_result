@@ -1,0 +1,126 @@
+<?php
+
+/**
+ * @file
+ * Provides a vis-reg result entity type.
+ */
+
+use Drupal\Core\Link;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Url;
+use Drupal\user\UserInterface;
+use Drupal\vis_reg_result\Entity\VisRegResult;
+use Drupal\vis_reg_result\VisRegResultInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function vis_reg_result_theme() {
+  return [
+    'vis_reg_result' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for vis-reg result templates.
+ *
+ * Default template: vis-reg-result.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the vis-reg result information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_vis_reg_result(array &$variables) {
+  $result = $variables['elements']['#vis_reg_result'];
+
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+  // Create link to VisReg Report.
+  // @todo: Possibly pull this functionality to the Entity level.
+  // @todo: Check for existance of the file first.
+  $wrapper = \Drupal::service('stream_wrapper_manager')->getViaUri("public://");
+  // @todo: SHould this structure be part of the settings?
+  // Multi-value field looking for common dir paths?
+  $uri = "base:" . $wrapper->getDirectoryPath() . "/vis-reg-reports/" . $result->field_directory->value . "/artifacts/backstop_data/html_report/index.html";
+  $url = Url::fromUri($uri);
+  $opts = [
+    'attributes' => [
+      'target' => '_blank',
+      'rel' => 'noopener',
+    ],
+  ];
+  $url->mergeOptions($opts);
+
+  $link = Link::fromTextAndUrl("Visual Regression report", $url);
+
+  $renderable_link = $link->toRenderable();
+  $renderable_link['#weight'] = 9000;
+
+  $variables['content']['vis_reg_report_link'] = $renderable_link;
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function vis_reg_result_user_cancel($edit, UserInterface $account, $method) {
+  switch ($method) {
+    case 'user_cancel_block_unpublish':
+      // Unpublish vis-reg results.
+      $storage = \Drupal::entityTypeManager()->getStorage('vis_reg_result');
+      $vis_reg_result_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->condition('status', 1)
+        ->execute();
+      foreach ($storage->loadMultiple($vis_reg_result_ids) as $vis_reg_result) {
+        $vis_reg_result->set('status', FALSE);
+        $vis_reg_result->save();
+      }
+      break;
+
+    case 'user_cancel_reassign':
+      // Anonymize vis-reg results.
+      $storage = \Drupal::entityTypeManager()->getStorage('vis_reg_result');
+      $vis_reg_result_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->execute();
+      foreach ($storage->loadMultiple($vis_reg_result_ids) as $vis_reg_result) {
+        $vis_reg_result->setOwnerId(0);
+        $vis_reg_result->save();
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for user entities.
+ */
+function vis_reg_result_user_predelete(UserInterface $account) {
+  // Delete vis-reg results.
+  $storage = \Drupal::entityTypeManager()->getStorage('vis_reg_result');
+  $vis_reg_result_ids = $storage->getQuery()
+    ->condition('uid', $account->id())
+    ->execute();
+  $vis_reg_results = $storage->loadMultiple($vis_reg_result_ids);
+  $storage->delete($vis_reg_results);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for vis_reg_result entities.
+ */
+function vis_reg_result_vis_reg_result_predelete(VisRegResultInterface $entity) {
+
+  // Remove Visual Regression Files.
+  if (!$entity->field_directory->isEmpty()) {
+    // @todo: this should be set in a settings file.
+    $target_dir = "public://vis-reg-reports/" . $entity->field_directory->value;
+    $file_system = \Drupal::service("file_system");
+    $file_system->deleteRecursive($target_dir);
+  }
+}

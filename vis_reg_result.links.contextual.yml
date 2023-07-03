@@ -1,0 +1,10 @@
+entity.vis_reg_result.edit_form:
+  route_name: entity.vis_reg_result.edit_form
+  group: vis_reg_result
+  title: Edit
+
+entity.vis_reg_result.delete_form:
+  route_name: entity.vis_reg_result.delete_form
+  group: vis_reg_result
+  title: Delete
+  weight: 10

@@ -1,0 +1,5 @@
+vis_reg_result.add_form:
+  title: 'Add vis-reg result'
+  route_name: entity.vis_reg_result.add_form
+  appears_on:
+    - entity.vis_reg_result.collection

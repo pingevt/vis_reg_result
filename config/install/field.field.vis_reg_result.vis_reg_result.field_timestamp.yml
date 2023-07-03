@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.vis_reg_result.field_timestamp
+  module:
+    - datetime
+    - vis_reg_result
+  enforced:
+    module:
+      - vis_reg_result
+id: vis_reg_result.vis_reg_result.field_timestamp
+field_name: field_timestamp
+entity_type: vis_reg_result
+bundle: vis_reg_result
+label: Timestamp
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

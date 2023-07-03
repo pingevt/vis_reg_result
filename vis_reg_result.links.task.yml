@@ -1,0 +1,22 @@
+entity.vis_reg_result.settings:
+  title: 'Settings'
+  route_name: entity.vis_reg_result.settings
+  base_route: entity.vis_reg_result.settings
+entity.vis_reg_result.view:
+  title: 'View'
+  route_name: entity.vis_reg_result.canonical
+  base_route: entity.vis_reg_result.canonical
+entity.vis_reg_result.edit_form:
+  title: 'Edit'
+  route_name: entity.vis_reg_result.edit_form
+  base_route: entity.vis_reg_result.canonical
+entity.vis_reg_result.delete_form:
+  title: 'Delete'
+  route_name: entity.vis_reg_result.delete_form
+  base_route: entity.vis_reg_result.canonical
+  weight: 10
+entity.vis_reg_result.collection:
+  title: 'Vis-Reg Results'
+  route_name: entity.vis_reg_result.collection
+  base_route: system.admin_content
+  weight: 10

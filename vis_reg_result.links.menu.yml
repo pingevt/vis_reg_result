@@ -1,0 +1,10 @@
+entity.vis_reg_result.settings:
+  title: 'Vis-Reg Result'
+  description: 'Configure a Vis-Reg Result entity type.'
+  route_name:  entity.vis_reg_result.settings
+  parent: system.admin_structure
+entity.vis_reg_result.collection:
+  title: 'Vis-Reg Results'
+  description: 'List of vis-reg results.'
+  route_name: entity.vis_reg_result.collection
+  parent: system.admin_content

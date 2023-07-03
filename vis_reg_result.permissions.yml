@@ -1,0 +1,14 @@
+administer vis-reg result:
+  title: 'Administer vis-reg result settings'
+  restrict access: true
+delete vis-reg result:
+  title: Delete vis-reg result
+create vis-reg result:
+  title: Create vis-reg result
+view vis-reg result:
+  title: View vis-reg result
+edit vis-reg result:
+  title: Edit vis-reg result
+use ci api:
+  title: "Use the CI API"
+  description: "Use the CI API."

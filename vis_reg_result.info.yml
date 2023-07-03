@@ -1,0 +1,8 @@
+name: Visual Regression Results
+type: module
+description: A custom entity to post BackstopJS visual regression results to the site.
+package: CI/CD
+core_version_requirement: ^10
+
+dependencies:
+  - key_auth:key_auth

@@ -1,0 +1,16 @@
+entity.vis_reg_result.settings:
+  path: 'admin/structure/vis-reg-result'
+  defaults:
+    _form: '\Drupal\vis_reg_result\Form\VisRegResultSettingsForm'
+    _title: 'Vis-Reg Result'
+  requirements:
+    _permission: 'administer vis-reg result'
+vis_reg_result.vis_reg_results:
+  path: /api/vis-reg-result
+  defaults:
+    _controller: '\Drupal\vis_reg_result\Controller\Api::visRegResults'
+  methods: [POST]
+  requirements:
+    _permission: "use ci api"
+  options:
+    _auth: [ 'key_auth' ]
