@@ -54,7 +54,7 @@ class Api extends ControllerBase implements ContainerInjectionInterface {
     $this->entityTypeManager = $entity_type_manager;
     $this->fileSystem = $file_system;
     $this->loggerFactory = $factory;
-    $this->configFactory = $configFactory;
+    $this->configFactory = $config_factory;
   }
 
   /**
