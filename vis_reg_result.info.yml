@@ -11,5 +11,5 @@ dependencies:
 
 # Information added by packaging script on 2023-07-04
 version: 1.0.0-alpha4
-project: external_site_monitor
+project: vis_reg_result
 datestamp: 1688521868399
