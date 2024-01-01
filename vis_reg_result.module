@@ -137,6 +137,34 @@ function vis_reg_result_vis_reg_result_predelete(VisRegResultInterface $entity) 
 }
 
 /**
+ * Implements hook_cron().
+ */
+function vis_reg_result_cron() {
+  $config = \Drupal::config('vis_reg_result.settings');
+  $months = $config->get("timespan");
+
+  $date = new \DateTime();
+  $date->modify("-" . $months . " month");
+
+  $storage = \Drupal::entityTypeManager()->getStorage('vis_reg_result');
+  $vis_reg_result_ids = $storage->getQuery()
+    ->condition('created', $date->getTimestamp(), "<")
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (!empty($vis_reg_result_ids)) {
+    $vis_reg_results = $storage->loadMultiple($vis_reg_result_ids);
+
+    $storage->delete($vis_reg_results);
+
+    \Drupal::logger('vis_reg_result')->notice(count($vis_reg_result_ids) . " deleted.");
+  }
+  else {
+    \Drupal::logger('vis_reg_result')->notice("Nothing to delete.");
+  }
+}
+
+/**
  * Implements hook_update_status_alter().
  */
 function vis_reg_result_update_status_alter(&$projects) {

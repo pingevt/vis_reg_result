@@ -40,12 +40,12 @@ class VisRegResultSettingsForm extends ConfigFormBase {
       '#title' => $this->t('How long to keep these entities'),
       '#default_value' => $config->get('timespan'),
       '#options' => [
-        '1' => "1 month",
-        '3' => "3 months",
-        '6' => "6 months",
-        '12' => "12 months",
+        '1' => $this->t("1 month"),
+        '3' => $this->t("3 months"),
+        '6' => $this->t("6 months"),
+        '12' => $this->t("12 months"),
       ],
-      '#description' => $this->t('The maximum number of messages to keep in the database log. Requires a <a href=":cron">cron maintenance task</a>.', [':cron' => Url::fromRoute('system.status')->toString()]),
+      '#description' => $this->t(''),
     ];
 
     return parent::buildForm($form, $form_state);
