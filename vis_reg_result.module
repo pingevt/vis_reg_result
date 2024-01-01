@@ -124,9 +124,16 @@ function vis_reg_result_vis_reg_result_predelete(VisRegResultInterface $entity) 
   if (!$entity->field_directory->isEmpty()) {
     // @todo this should be set in a settings file.
     $target_dir = "public://vis-reg-reports/" . $entity->field_directory->value;
+
+    // Log which directory.
+    $message = "Trying to delete " . $target_dir;
+    \Drupal::logger('vis_reg_result')->notice($message);
+
+    // Delete.
     $file_system = \Drupal::service("file_system");
     $file_system->deleteRecursive($target_dir);
   }
+
 }
 
 /**

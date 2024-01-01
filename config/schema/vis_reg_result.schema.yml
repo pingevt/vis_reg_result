@@ -1,0 +1,8 @@
+# Schema for the configuration files of the api_logger module.
+vis_reg_result.settings:
+  type: config_object
+  label: 'Visual Regression Result settings'
+  mapping:
+    timespan:
+      type: integer
+      label: 'How many months to keep Visual Regression Results'
