@@ -1,6 +1,6 @@
 {
   "name": "vis_reg_result",
-  "version": "1.0.0-rc1",
+  "version": "1.1.0-alpha1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/pingevt/vis_reg_result#readme",
   "dependencies": {
-    "@bluecadet/drops": "^1.0.0-alpha.5"
+    "@bluecadet/drops": "^1.1.0"
   },
   "devDependencies": {
-    "concurrently": "^7.6.0",
-    "postcss-pxtorem": "^6.0.0"
+    "concurrently": "^9.2.0",
+    "postcss-pxtorem": "^6.1.0"
   }
 }
